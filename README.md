@@ -5,7 +5,7 @@ Two programmes created during the duration of the course 'Project in Bioinformat
 ## Installation Instructions
 
 The code can be downloaded from **https://github.com/imszofko/PSA-Implementation.git** or the **assignment page** in canvas. 
-Once the code is downloaded, you can unzip the files and save contents into a folder.
+Once the zip folder is downloaded, you can unzip the files and save contents into a folder.
 - Recommended you open the folder in the editor of your choice.
 - Recommended you have **Biopython** package installed
 
@@ -22,8 +22,9 @@ You open either the needleWunch.py file or the smithWaterman.py file and run the
 Immediately you will be asked to enter an ENSEMBL sequence ID. In this case you will enter: **ENSG00000139618.**
 
 After you press enter, it will ask you for the name/path to the FASTA file that is saved in the folder; you enter: **Variant700202.fasta** or **Variant713680.fasta**. 
+- To use with different FASTA file, you just enter the name (and the path of in a different working directory) of the FASTA file.
 
-The code will run on its own from here on out. It takes approximately 25 minutes for both programmes to run. 
+The code will run on its own from here on out. It takes approximately 25 minutes for each programmes to run. 
 
 ## Output Expectations
 
