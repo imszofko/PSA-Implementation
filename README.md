@@ -4,7 +4,7 @@ Two programmes created during the duration of the course 'Project in Bioinformat
 
 ## Installation Instructions
 
-The code can be downloaded from **https://github.com/imszofko/Bioinformatics-Project-HiS.git** or the **assignment page** in canvas. 
+The code can be downloaded from **https://github.com/imszofko/PSA-Implementation.git** or the **assignment page** in canvas. 
 Once the code is downloaded, you can unzip the files and save contents into a folder.
 - Recommended you open the folder in the editor of your choice.
 - Recommended you have **Biopython** package installed
