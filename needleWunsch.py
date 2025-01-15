@@ -198,7 +198,7 @@ def NeedleWunsch(seq1, seq2, gap = -1, match = 1):
             alignScore += -1
     
     return alignA, alignB, matchString, alignScore
-output1, output2, matchString, alignScore, = NeedleWunsch(seq1, seq2, gap = -1, match = 1)
+output1, output2, matchString, alignScore = NeedleWunsch(seq1, seq2, gap = -1, match = 1)
 
 ##Storing the outputs of seq1 and seq2 and other variables and printing the results
 print("Alignment completed: ", output1[0:10] + '\n' + matchString[0:10]+ '\n' + output2[0:10])
