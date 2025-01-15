@@ -36,12 +36,12 @@ if not ensemblResponse.ok:
 #Global fasta file is always the same since the file name is created as the saved content of the fetched data 
 globalFastaFile = "Seq_ENSEMBL.fasta"
 
-def FastaFile(globalFasta, inputFastaFile):
+def FastaFile(globalFasta, inputFile):
     #read the global FASTA data file
     globalDataFileseq1 = list(SeqIO.parse(globalFasta, "fasta"))
     
     #read the input FASTA data file
-    variantDataseq2 = list(SeqIO.parse(inputFastaFile, "fasta"))
+    variantDataseq2 = list(SeqIO.parse(inputFile, "fasta"))
     
     #Extracting IDs and sequences for the first sequence
     for record1 in globalDataFileseq1:
