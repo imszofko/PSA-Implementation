@@ -1,4 +1,4 @@
-# needleWunsch and smithWaterman
+# NeedleWunsch and SmithWaterman
 
 Two programmes created during the duration of the course 'Project in Bioinformatics.'
 
