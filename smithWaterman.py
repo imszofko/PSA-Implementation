@@ -34,7 +34,7 @@ if not ensemblResponse.ok:
 #Global variable for FASTA file from ENSEMBL
 globalFastaFile = "Seq_ENSEMBL.fasta"                               #Integrated into the parameter since this file name isnt changing
 
-def fastaFile(globalFasta, inputFastaFile):
+def FastaFile(globalFasta, inputFastaFile):
     #read the global FASTA data file
     globalDataFileseq1 = list(SeqIO.parse(globalFasta, "fasta"))
     
@@ -53,7 +53,7 @@ def fastaFile(globalFasta, inputFastaFile):
         print("Sequence two:", seq2ID + '\n' + seq2[0:10])
 
     return seq1, seq1ID, seq2, seq2ID
-seq1, seq1ID, seq2, seq2ID = fastaFile(globalFastaFile, inputFile)
+seq1, seq1ID, seq2, seq2ID = FastaFile(globalFastaFile, inputFile)
 
 """
 "Testing with these variables instead of big data files
@@ -63,7 +63,7 @@ seq2 = str("actgacgactgatcgagcatctagcatcgacgactatcgatcgagcatctagcatcggactatctctt
 seq2ID = "Name of Seq1"
 """
 
-def smithWaterman(seq1, seq2, mismatch = -1, gap = -1, match = 1, maxScore = 0):
+def SmithWaterman(seq1, seq2, mismatch = -1, gap = -1, match = 1, maxScore = 0):
     #Create the matrix
     s1 = len(seq1)                  #Sequence one is the vertical sequence to the left
     s2 = len(seq2)                  #Sequence two is teh horizontal sequence on top
@@ -172,7 +172,7 @@ def smithWaterman(seq1, seq2, mismatch = -1, gap = -1, match = 1, maxScore = 0):
     return alignA, alignB, matchString, alignScore
 
 #Printing out the results
-output1, output2, matchString, alignScore = smithWaterman(seq1, seq2, mismatch = -1, gap = -1, match = 1, maxScore = 0)
+output1, output2, matchString, alignScore = SmithWaterman(seq1, seq2, mismatch = -1, gap = -1, match = 1, maxScore = 0)
 print("Alignment Score: ", alignScore)
 
 #To write the sequences to a .txt file to look like EMBOSS and 'highlight' nucleotides that are different
@@ -182,7 +182,7 @@ print("Alignment Score: ", alignScore)
 ##The txt file should be fluid and easy to read. It will have the seq1 and seq2 and its match string broken into chunks for easy reading.
 ##The difference will be in lowercase. And the sequence name will be stated in the beginnning of each sequence, even in the chunks
 '''
-def highlightRegions(output1, output2):
+def HighlightRegion(output1, output2):
     print("Starting to analyze and highlight regions with differences.")
     highlightSeq1 = []
     highlightSeq2 = []
@@ -200,10 +200,10 @@ def highlightRegions(output1, output2):
     return ''.join(highlightSeq1), ''.join(highlightSeq2) ##Joins the strings together
 print("Finished highlighting.")
 
-def writeToFile(output1, output2, matchString, seq1ID, seq2ID, output_file):
+def WriteToFile(output1, output2, matchString, seq1ID, seq2ID, output_file):
     print("Started writing alignment to text file.")
     #calls up highlightRegion function and stores the alignments in 
-    highlightSeq1, highlightSeq2 = highlightRegions(output1, output2)
+    highlightSeq1, highlightSeq2 = HighlightRegion(output1, output2)
     chunk_size = 60                                                     ##How wide the chunks of the alignment will be displayed as
     ##Had big issue with the match string going in between the sequence IDs, this is a good fix
     seqPadding = max(len(seq1ID), len(seq2ID)) + 2                      ##To make sure that the matchstring starts and is accurate to the alignment
@@ -219,5 +219,5 @@ def writeToFile(output1, output2, matchString, seq1ID, seq2ID, output_file):
 
     print(f"Highlighted alignment written to {output_file}")
 
-writeToFile(output1, output2, matchString, seq1ID, seq2ID, output_file = "SW_Alignment.txt")
+WriteToFile(output1, output2, matchString, seq1ID, seq2ID, output_file = "SW_Alignment.txt")
 ##End.

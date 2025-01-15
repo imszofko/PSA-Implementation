@@ -36,7 +36,7 @@ if not ensemblResponse.ok:
 #Global fasta file is always the same since the file name is created as the saved content of the fetched data 
 globalFastaFile = "Seq_ENSEMBL.fasta"
 
-def fastaFile(globalFasta, inputFastaFile):
+def FastaFile(globalFasta, inputFastaFile):
     #read the global FASTA data file
     globalDataFileseq1 = list(SeqIO.parse(globalFasta, "fasta"))
     
@@ -55,7 +55,7 @@ def fastaFile(globalFasta, inputFastaFile):
         print("Sequence two:", seq2ID + '\n' + seq2[0:10])
 
     return seq1, seq1ID, seq2, seq2ID
-seq1, seq1ID, seq2, seq2ID = fastaFile(globalFastaFile, inputFile)
+seq1, seq1ID, seq2, seq2ID = FastaFile(globalFastaFile, inputFile)
 
 
 '''
@@ -67,7 +67,7 @@ seq2ID = "Name of Seq1"
 '''
 
 ##Matrix of Zeros Function
-def zeros(rows, cols):
+def Zeros(rows, cols):
     #Define an empty list
     matZero = []
     #Set up rows in the matrix
@@ -83,7 +83,7 @@ def zeros(rows, cols):
     return matZero
 
 #Return the score between any two bases in alignment
-def matchScore(match1, match2, mismatch = -1, gap = -1, match = 1):
+def MatchScore(match1, match2, mismatch = -1, gap = -1, match = 1):
     if match1 == match2:
         return match                #+1
     elif match1 == '-' or match2 == '-':
@@ -92,7 +92,7 @@ def matchScore(match1, match2, mismatch = -1, gap = -1, match = 1):
         return mismatch             #-1
     
 ##Function that fills out the matrix of scores
-def needleWunsch(seq1, seq2, gap = -1, match = 1):
+def NeedleWunsch(seq1, seq2, gap = -1, match = 1):
     print("Starting NW sequence alignment.")
     
     #Length of two sequence
@@ -101,12 +101,12 @@ def needleWunsch(seq1, seq2, gap = -1, match = 1):
 
     #FILLING IN SCOREMATRIX
 
-    #Generate the matrix of zeros to stores the scores
-    scoreMatrix = zeros(s1 + 1, s2 + 1)                     #+1 to create the 0s col and rows
+    #Generate the matrix of Zeros to stores the scores
+    scoreMatrix = Zeros(s1 + 1, s2 + 1)                     #+1 to create the 0s col and rows
     print("Starting to make scoring matrix.")
 
     #Calculate score table
-    #First col and first row of zeros
+    #First col and first row of Zeros
     
     #First column
     for i in range(0, s1 + 1):
@@ -121,7 +121,7 @@ def needleWunsch(seq1, seq2, gap = -1, match = 1):
 
             #Calculating the score by checking the top, the left, and the diagonal squares
             
-            match = scoreMatrix[i - 1][j - 1] + matchScore(seq1[i - 1], seq2[j - 1])                  #Diagonal one from [i][j] position at that time
+            match = scoreMatrix[i - 1][j - 1] + MatchScore(seq1[i - 1], seq2[j - 1])                  #Diagonal one from [i][j] position at that time
             insertGap = scoreMatrix[i - 1][j] + gap                                               #Up one of [i][j] position at that time
             misDelete = scoreMatrix[i][j - 1] + gap                                               #To the left of [i][j] position at that time
 
@@ -146,7 +146,7 @@ def needleWunsch(seq1, seq2, gap = -1, match = 1):
 
     while i > 0 and j > 0:
         #checking that it is a match, if it is then it appends to alignA/B and then jump to the diagnol value after
-        if scoreMatrix[i][j] == scoreMatrix[i - 1][j - 1] + matchScore(seq1[i - 1], seq2[j - 1]):                           #Diagonal step
+        if scoreMatrix[i][j] == scoreMatrix[i - 1][j - 1] + MatchScore(seq1[i - 1], seq2[j - 1]):                           #Diagonal step
             alignA += seq1[i - 1]
             alignB += seq2[j - 1]
             i -= 1 #move forward
@@ -198,7 +198,7 @@ def needleWunsch(seq1, seq2, gap = -1, match = 1):
             alignScore += -1
     
     return alignA, alignB, matchString, alignScore
-output1, output2, matchString, alignScore, = needleWunsch(seq1, seq2, gap = -1, match = 1)
+output1, output2, matchString, alignScore, = NeedleWunsch(seq1, seq2, gap = -1, match = 1)
 
 ##Storing the outputs of seq1 and seq2 and other variables and printing the results
 print("Alignment completed: ", output1[0:10] + '\n' + matchString[0:10]+ '\n' + output2[0:10])
@@ -210,7 +210,7 @@ print("Alignment Score: ", alignScore)
 ##The txt file should be fluid and easy to read. It will have the seq1 and seq2 and its match string broken into chunks for easy reading.
 ##The difference will be in lowercase. And the sequence name will be stated in the beginnning of each sequence, even in the chunks
 '''
-def highlightRegions(output1, output2):
+def HighlightRegions(output1, output2):
     print("Starting to analyze and highlight regions with differences.")
     highlightSeq1 = []
     highlightSeq2 = []
@@ -228,10 +228,10 @@ def highlightRegions(output1, output2):
     return ''.join(highlightSeq1), ''.join(highlightSeq2) ##Joins the strings together
 print("Finished highlighting regions.")
 
-def writeToFile(output1, output2, matchString, seq1ID, seq2ID, output_file):
+def WriteToFile(output1, output2, matchString, seq1ID, seq2ID, output_file):
     print("Started writing alignment to text file.")
     #calls up highlightRegion function and stores the alignments in 
-    highlightSeq1, highlightSeq2 = highlightRegions(output1, output2)
+    highlightSeq1, highlightSeq2 = HighlightRegions(output1, output2)
     
 
     chunk_size = 60                 ##How wide the chunks of the alignment will be displayed as
@@ -248,5 +248,5 @@ def writeToFile(output1, output2, matchString, seq1ID, seq2ID, output_file):
             file.write(f"{seq2ID.ljust(seqPadding)}{chunk2}\n\n")
 
     print(f"Highlighted alignment written to {output_file}")
-writeToFile(output1, output2, matchString, seq1ID, seq2ID, output_file = "NW_Alignment.txt")
+WriteToFile(output1, output2, matchString, seq1ID, seq2ID, output_file = "NW_Alignment.txt")
 
